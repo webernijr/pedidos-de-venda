@@ -44,6 +44,7 @@ type
     buutonCarregarPedido: TButton;
     labelNomeProduto: TLabel;
     editNomeProduto: TEdit;
+    FDMemTableauto: TIntegerField;
     procedure buttonConfirmarClick(Sender: TObject);
     procedure DBGridListagemPedidoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure buttonLimparClick(Sender: TObject);
@@ -72,6 +73,9 @@ type
     procedure BloquearPedido();
     procedure LiberarPedido();
     procedure DeletarPedido;
+    procedure liberarAlteracaoPedido;
+    procedure LiberarCampoCliente;
+    procedure BloquearCliente;
     { Private declarations }
   public
     { Public declarations }
@@ -83,7 +87,7 @@ var
 implementation
 
 uses
-  uPedidoDadosGeraisController, uFerramentasController;
+  uPedidoDadosGeraisController, uFerramentasController, uPedidoProdutosController;
 
 {$R *.dfm}
 
@@ -96,7 +100,6 @@ end;
 procedure TformPedidoView.buutonCarregarPedidoClick(Sender: TObject);
 begin
   CarregarPedido();
-  ValidarCamposCarregarPedido();
 end;
 
 procedure TformPedidoView.BloquearPedido;
@@ -115,10 +118,7 @@ begin
   editCliente.ParentColor    := False;
   editCliente.Color          := clWindow;
   if editNumeroPedido.Text <> '' then
-    begin
-      editNumeroPedido.Clear;
-      LimparGrid();
-    end;
+    LimparGrid();
 end;
 
 procedure TformPedidoView.buttonCancelarPedidoClick(Sender: TObject);
@@ -132,6 +132,7 @@ begin
   ValidarDadosAdicionar;
   PreencherGrid;
   LimparCampos;
+  editProduto.SetFocus;
 end;
 
 procedure TformPedidoView.buttonFecharClick(Sender: TObject);
@@ -169,6 +170,8 @@ var
 begin
   pedidoDadosGeraisController := TPedidoDadosGeraisController.Create();
   try
+    if editNumeroPedido.Text <> '' then
+      pedidoDadosGeraisController.numeroPedido       := StrToIntDef(editNumeroPedido.Text, 0);
     pedidoDadosGeraisController.cliente.codigo       := StrToIntDef(editCliente.Text, 0);
     pedidoDadosGeraisController.valotTotal           := FValorTotal;
     FDMemTable.First;
@@ -241,8 +244,13 @@ begin
   editNomeProduto.Clear;
   editQuantidade.Clear;
   editValorUnitario.Clear;
+
+  if editNumeroPedido.Text = '' then
+    editCliente.Clear;
+
   FidItemListagem := '';
   LiberarCampoProduto();
+  LiberarCampoCliente();
 end;
 
 procedure TformPedidoView.LimparGrid();
@@ -260,9 +268,23 @@ begin
 end;
 
 procedure TformPedidoView.DeletarRegistroListagem();
+var
+  pedidoProdutoController : TPedidoProdutosController;
 begin
   if Application.MessageBox('Deseja deletar o registro selecionado?', PChar(Application.Title), MB_YESNO+MB_ICONQUESTION) = ID_NO then
     Exit;
+
+  if FDMemTable.FieldByName('auto').AsInteger <> 0 then
+    begin
+      pedidoProdutoController := TPedidoProdutosController.Create();
+      try
+        pedidoProdutoController.id := FDMemTable.FieldByName('auto').AsInteger;
+        pedidoProdutoController.Deletar;
+      finally
+        pedidoProdutoController.Free;
+      end;
+    end;
+
   FValorTotal := FValorTotal - FDMemTable.FieldByName('valor_total').AsCurrency;
   PrencherValorTotalPedido;
   FDMemTable.Delete;
@@ -321,13 +343,14 @@ begin
                 FDMemTable.FieldByName('quantidade').AsCurrency      := FieldByName('QUANTIDADE').AsCurrency;;
                 FDMemTable.FieldByName('valor_unitario').AsCurrency  := FieldByName('VALOR_UNITARIO').AsCurrency;
                 FDMemTable.FieldByName('valor_total').AsCurrency     := FDMemTable.FieldByName('quantidade').AsCurrency * FDMemTable.FieldByName('valor_unitario').AsCurrency;;
+                FDMemTable.FieldByName('auto').AsInteger             := FieldByName('AUTOINCREM').AsInteger;
               end;
             FDMemTable.Post;
             FValorTotal := FValorTotal + FDMemTable.FieldByName('valor_total').AsCurrency;
 
             pedidoDadosGeraisController.query.Next;
           end;
-        BloquearPedido();
+        BloquearCliente();
         PrencherValorTotalPedido();
       end;
   finally
@@ -337,10 +360,12 @@ end;
 
 procedure TformPedidoView.CarregarProdutoListagem();
 begin
+  panelCarregarPedido.Visible := False;
   FidItemListagem        := FDMemTable.FieldByName('id').asString;
   editProduto.Text       := FDMemTable.FieldByName('codigo_produto').asString;
   editQuantidade.Text    := FormatCurr('#,##0.00', FDMemTable.FieldByName('quantidade').asCurrency);
   editValorUnitario.Text := FormatCurr('#,##0.00', FDMemTable.FieldByName('valor_unitario').asCurrency);
+  liberarAlteracaoPedido();
   bloquearCampoProduto();
 end;
 
@@ -359,7 +384,8 @@ end;
 
 procedure TformPedidoView.ValidarCamposCarregarPedido();
 begin
-  panelCarregarPedido.Visible := (buttonGravarPedido.Enabled = False) or ((buttonGravarPedido.Enabled = True) and (editCliente.Text = ''))
+  panelCarregarPedido.Visible := editCliente.Text = '';
+  editNumeroPedido.Clear;
 end;
 
 procedure TformPedidoView.DeletarPedido();
@@ -377,6 +403,28 @@ begin
   finally
     pedidoDadosGeraisController.Free;
   end;
+end;
+
+procedure TformPedidoView.liberarAlteracaoPedido;
+begin
+  buttonConfirmar.Enabled    := True;
+  buttonGravarPedido.Enabled := True;
+end;
+
+procedure TformPedidoView.LiberarCampoCliente();
+begin
+  if editNumeroPedido.Text = '' then
+    begin
+      editCliente.ReadOnly    := False;
+      editCliente.ParentColor := False;
+      editCliente.Color       := clWindow;
+    end;
+end;
+
+procedure TformPedidoView.BloquearCliente;
+begin
+  editCliente.ReadOnly       := True;
+  editCliente.ParentColor    := True;
 end;
 
 end.

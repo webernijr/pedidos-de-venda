@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2022/12/04 16:55:41.573,C:\Weber\pedidos-de-venda\Fonte\view\uformPedido.pas=</Transaction>
-    <Transaction>2022/12/04 16:55:41.580,C:\Weber\pedidos-de-venda\Fonte\model\uFerramentasModel.pas=</Transaction>
-    <Transaction>2022/12/04 16:55:41.583,C:\Weber\pedidos-de-venda\Fonte\controller\uFerramentasController.pas=</Transaction>
-    <Transaction>2022/12/04 16:55:41.586,C:\Weber\pedidos-de-venda\Fonte\model\udmWK.pas=</Transaction>
-    <Transaction>2022/12/04 16:56:16.909,=C:\Weber\pedidos-de-venda\Fonte\view\uformPedidoView.pas</Transaction>
-    <Transaction>2022/12/04 16:58:31.335,=C:\Weber\pedidos-de-venda\Fonte\model\udmWK.pas</Transaction>
-    <Transaction>2022/12/04 16:58:41.077,=C:\Weber\pedidos-de-venda\Fonte\model\uFerramentasModel.pas</Transaction>
-    <Transaction>2022/12/04 16:58:52.947,=C:\Weber\pedidos-de-venda\Fonte\controller\uPedidoDadosGeraisController.pas</Transaction>
-    <Transaction>2022/12/04 17:00:05.977,=C:\Weber\pedidos-de-venda\Fonte\controller\uPedidoProdutosController.pas</Transaction>
-    <Transaction>2022/12/04 17:00:21.312,=C:\Weber\pedidos-de-venda\Fonte\controller\uClienteControler.pas</Transaction>
-    <Transaction>2022/12/04 17:00:40.534,C:\Weber\pedidos-de-venda\Fonte\controller\uClienteControler.pas=</Transaction>
-    <Transaction>2022/12/04 17:00:59.971,=C:\Weber\pedidos-de-venda\Fonte\controller\uClienteController.pas</Transaction>
-    <Transaction>2022/12/04 17:01:21.770,=C:\Weber\pedidos-de-venda\Fonte\controller\uFerramentasController.pas</Transaction>
-    <Transaction>2022/12/04 17:02:49.208,=C:\Weber\pedidos-de-venda\Fonte\model\uPedidoDadosGeraisModel.pas</Transaction>
-    <Transaction>2022/12/04 17:13:40.014,=C:\Weber\pedidos-de-venda\Fonte\model\uClienteModel.pas</Transaction>
-    <Transaction>2022/12/04 17:13:48.518,=C:\Weber\pedidos-de-venda\Fonte\model\uPedidoProdutosModel.pas</Transaction>
+	<Transactions>
+    <Transaction>2022/12/04 16:55:41.000.580,C:\Weber\pedidos-de-venda\Fonte\model\uFerramentasModel.pas=</Transaction>
+    <Transaction>2022/12/04 16:55:41.000.586,C:\Weber\pedidos-de-venda\Fonte\model\udmWK.pas=</Transaction>
+    <Transaction>2022/12/04 16:55:41.000.583,C:\Weber\pedidos-de-venda\Fonte\controller\uFerramentasController.pas=</Transaction>
+    <Transaction>2022/12/04 16:55:41.000.573,C:\Weber\pedidos-de-venda\Fonte\view\uformPedido.pas=</Transaction>
+    <Transaction>2022/12/04 16:56:16.000.909,=C:\Weber\pedidos-de-venda\Fonte\view\uformPedidoView.pas</Transaction>
+    <Transaction>2022/12/04 16:58:31.000.335,=C:\Weber\pedidos-de-venda\Fonte\model\udmWK.pas</Transaction>
+    <Transaction>2022/12/04 16:58:41.000.077,=C:\Weber\pedidos-de-venda\Fonte\model\uFerramentasModel.pas</Transaction>
+    <Transaction>2022/12/04 16:58:52.000.947,=C:\Weber\pedidos-de-venda\Fonte\controller\uPedidoDadosGeraisController.pas</Transaction>
+    <Transaction>2022/12/04 17:00:05.000.977,=C:\Weber\pedidos-de-venda\Fonte\controller\uPedidoProdutosController.pas</Transaction>
+    <Transaction>2022/12/04 17:00:21.000.312,=C:\Weber\pedidos-de-venda\Fonte\controller\uClienteControler.pas</Transaction>
+    <Transaction>2022/12/04 17:00:40.000.534,C:\Weber\pedidos-de-venda\Fonte\controller\uClienteControler.pas=</Transaction>
+    <Transaction>2022/12/04 17:00:59.000.971,=C:\Weber\pedidos-de-venda\Fonte\controller\uClienteController.pas</Transaction>
+    <Transaction>2022/12/04 17:01:21.000.770,=C:\Weber\pedidos-de-venda\Fonte\controller\uFerramentasController.pas</Transaction>
+    <Transaction>2022/12/04 17:02:49.000.208,=C:\Weber\pedidos-de-venda\Fonte\model\uPedidoDadosGeraisModel.pas</Transaction>
+    <Transaction>2022/12/04 17:13:40.000.014,=C:\Weber\pedidos-de-venda\Fonte\model\uClienteModel.pas</Transaction>
+    <Transaction>2022/12/04 17:13:48.000.518,=C:\Weber\pedidos-de-venda\Fonte\model\uPedidoProdutosModel.pas</Transaction>
   </Transactions>
 </BorlandProject>

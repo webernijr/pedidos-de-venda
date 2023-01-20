@@ -254,6 +254,10 @@
         Name = 'valor_total'
         DataType = ftCurrency
         Precision = 19
+      end
+      item
+        Name = 'auto'
+        DataType = ftInteger
       end>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -295,6 +299,10 @@
       DisplayLabel = 'Valor toral'
       DisplayWidth = 13
       FieldName = 'valor_total'
+    end
+    object FDMemTableauto: TIntegerField
+      FieldName = 'auto'
+      Visible = False
     end
   end
   object DataSource: TDataSource

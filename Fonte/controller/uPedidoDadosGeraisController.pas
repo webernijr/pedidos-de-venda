@@ -72,6 +72,8 @@ begin
   pedidoDadosGeraisModel := TPedidoDadosGeraisModel.Create();
   try
     FCliente.Carregar;
+    if FNumeroPedido <> 0 then
+      pedidoDadosGeraisModel.numeroPedido       := FNumeroPedido;
     pedidoDadosGeraisModel.cliente.codigo       := FCliente.codigo;
     pedidoDadosGeraisModel.valotTotal           := FValorTotal;
     pedidoDadosGeraisModel.pedidoProdutos.itens := FPedidoProdutos.itens;

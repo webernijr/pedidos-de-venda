@@ -28,6 +28,7 @@ type
     property valorToTal: Currency read FValorToTal write FValorToTal;
     property itens: TFDMemTable read FItens write FItens;
     procedure Gravar();
+    procedure Deletar();
     procedure Limpar();
   end;
 implementation
@@ -76,9 +77,10 @@ procedure TPedidoProdutosController.Gravar();
 var
   pedidoProdutoModel : TPedidoProdutosModel;
 begin
-
+  itens.First;
   while not itens.Eof do
     begin
+      FId            := itens.FieldByName('auto').AsInteger;
       FCodigo        := itens.FieldByName('codigo_produto').AsInteger;
       FQuantidade    := itens.FieldByName('quantidade').AsCurrency;
       FValorUnitario := itens.FieldByName('valor_unitario').AsCurrency;
@@ -86,24 +88,38 @@ begin
 
       Validar;
 
-      if FId = 0 then
-        begin
-          pedidoProdutoModel := TPedidoProdutosModel.Create;
-          try
-            pedidoProdutoModel.numeroPedido  := FNumeroPedido;
-            pedidoProdutoModel.codigo        := FCodigo;
-            pedidoProdutoModel.quantidade    := FQuantidade;
-            pedidoProdutoModel.valorUnitario := FValorUnitario;
-            pedidoProdutoModel.valorToTal    := FValorTotal;
+      pedidoProdutoModel := TPedidoProdutosModel.Create;
+      try
+        if FId <> 0 then
+          pedidoProdutoModel.id          := FId;
+        pedidoProdutoModel.numeroPedido  := FNumeroPedido;
+        pedidoProdutoModel.codigo        := FCodigo;
+        pedidoProdutoModel.quantidade    := FQuantidade;
+        pedidoProdutoModel.valorUnitario := FValorUnitario;
+        pedidoProdutoModel.valorToTal    := FValorTotal;
 
-            pedidoProdutoModel.Inserir;
-          finally
-            pedidoProdutoModel.Free;
-          end;
-
-        end;
+        pedidoProdutoModel.Gravar;
+      finally
+        pedidoProdutoModel.Free;
+      end;
 
       itens.Next;
+    end;
+end;
+
+procedure TPedidoProdutosController.Deletar();
+var
+  pedidoProdutoModel : TPedidoProdutosModel;
+begin
+  if FId <> 0 then
+    begin
+      pedidoProdutoModel := TPedidoProdutosModel.Create;
+      try
+        pedidoProdutoModel.id := FId;
+        pedidoProdutoModel.Deletar;
+      finally
+        pedidoProdutoModel.Free;
+      end;
     end;
 end;
 

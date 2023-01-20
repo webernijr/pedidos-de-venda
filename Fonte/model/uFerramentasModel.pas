@@ -3,7 +3,7 @@ unit uFerramentasModel;
 interface
 
 uses
-  System.SysUtils, Vcl.Forms, udmWK, Winapi.Windows, FireDAC.Comp.Client;
+  System.SysUtils, Vcl.Forms, udmWK, Winapi.Windows, FireDAC.Comp.Client, IniFiles;
 
   function conectar(): Boolean;
   function createQuery: TFDQuery;
@@ -13,17 +13,38 @@ uses
 
 implementation
 
-procedure parametroConexao();
+function parametroConexao(): Boolean;
+var
+  arquivoINI: TIniFile;
+  servidor,
+  arquivo   : string;
 begin
-  dmWK.Servidor := 'localhost';
-  dmWK.Usuario  := 'root';
-  dmWK.Senha    := '';
+  Result  := True;
+  arquivo := ExtractFilePath(Application.ExeName) + 'config.ini';
+
+  if not FileExists(arquivo) then
+      Result := False
+  else
+    begin
+      ArquivoINI := TIniFile.Create(arquivo);
+      servidor   := ArquivoINI.ReadString('PARAMETROS', 'SERVIDOR', 'localhost');
+      ArquivoINI.Free;
+
+      dmWK.Servidor := servidor;
+      dmWK.Usuario  := 'root';
+      dmWK.Senha    := '';
+    end;
 end;
 
 function conectar(): Boolean;
 begin
-  parametroConexao();
-  Result := dmWK.conectar();
+  if parametroConexao() then
+    Result := dmWK.conectar()
+  else
+    begin
+      Application.MessageBox('Atenção: Favor criar arquivo config.ini', PChar(Application.Title), MB_ICONINFORMATION+MB_OK);
+      Exit;
+    end;
 end;
 
 function createQuery: TFDQuery;
