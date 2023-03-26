@@ -16,13 +16,15 @@ type
     MySQLDriverLink: TFDPhysMySQLDriverLink;
     FDGUIxWaitCursor: TFDGUIxWaitCursor;
   private
-    FServidor: String;
-    FUsuario : String;
-    FSenha   : String;
+    FServidor : String;
+    FDataBase : String;
+    FUsuario  : String;
+    FSenha    : String;
     procedure parametroConexao;
     { Private declarations }
   public
     property Servidor: String read FServidor write FServidor;
+    property DataBase: String read FDataBase write FDataBase;
     property Usuario: String read FUsuario write FUsuario;
     property Senha: String read FSenha write FSenha;
 
@@ -46,7 +48,7 @@ procedure TdmWK.parametroConexao();
 begin
   FDConnection.Params.Clear;
   FDConnection.Params.Add('DriverID=MySQL');
-  FDConnection.Params.Add('Database=teste');
+  FDConnection.Params.Add('Database='+FDataBase);
   FDConnection.Params.Add('Server='+FServidor);
   FDConnection.Params.Add('User_Name='+FUsuario);
   FDConnection.Params.Add('Password='+FSenha);

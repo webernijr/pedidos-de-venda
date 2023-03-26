@@ -10,6 +10,8 @@ uses
   procedure preparaQuerySQLAdd(query: TFDQuery; sql: string);
   procedure preparaQueryOpen(query: TFDQuery; sql: string);
   function retornarDadosModel(tabela, campo, oondicao: string): string;
+  function soNumero(Key: Char): Char;
+  function soNumeroValor(Key: Char): Char;
 
 implementation
 
@@ -17,6 +19,9 @@ function parametroConexao(): Boolean;
 var
   arquivoINI: TIniFile;
   servidor,
+  dataBase,
+  usuario,
+  senha,
   arquivo   : string;
 begin
   Result  := True;
@@ -28,11 +33,15 @@ begin
     begin
       ArquivoINI := TIniFile.Create(arquivo);
       servidor   := ArquivoINI.ReadString('PARAMETROS', 'SERVIDOR', 'localhost');
+      dataBase   := ArquivoINI.ReadString('PARAMETROS', 'DATABASE', '');
+      usuario    := ArquivoINI.ReadString('PARAMETROS', 'USUARIO', 'root');
+      senha      := ArquivoINI.ReadString('PARAMETROS', 'SENHA', '');
       ArquivoINI.Free;
 
       dmWK.Servidor := servidor;
-      dmWK.Usuario  := 'root';
-      dmWK.Senha    := '';
+      dmWK.DataBase := dataBase;
+      dmWK.Usuario  := usuario;
+      dmWK.Senha    := senha;
     end;
 end;
 
@@ -82,6 +91,22 @@ begin
     query.Free;
   end;
 
+end;
+
+function soNumero(Key: Char): Char;
+begin
+  if not (Key in ['0'..'9', Chr(8)] ) then
+    Key := #0;
+
+  Result := Key;
+end;
+
+function soNumeroValor(Key: Char): Char;
+begin
+  if not (Key in ['0'..'9', Chr(8), ','] ) then
+    Key := #0;
+
+  Result := Key;
 end;
 
 end.

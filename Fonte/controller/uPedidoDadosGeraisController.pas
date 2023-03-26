@@ -27,7 +27,7 @@ type
     destructor Destroy; override;
 
     procedure Limpar();
-    procedure Gravar();
+    function Gravar():Integer;
     procedure Carregar();
     procedure Deletar();
   end;
@@ -65,7 +65,7 @@ begin
   FCliente.Limpar();
 end;
 
-procedure TPedidoDadosGeraisController.Gravar;
+function TPedidoDadosGeraisController.Gravar():Integer;
 var
   pedidoDadosGeraisModel : TPedidoDadosGeraisModel;
 begin
@@ -78,6 +78,9 @@ begin
     pedidoDadosGeraisModel.valotTotal           := FValorTotal;
     pedidoDadosGeraisModel.pedidoProdutos.itens := FPedidoProdutos.itens;
     pedidoDadosGeraisModel.Gravar;
+
+    Result := pedidoDadosGeraisModel.numeroPedido;
+
   finally
     pedidoDadosGeraisModel.Free;
   end;

@@ -150,7 +150,7 @@ const
         '     CODIGO, ' +
         '     QUANTIDADE, ' +
         '     VALOR_UNITARIO, ' +
-        '     VALOR_UNITARIO ' +
+        '     VALOR_TOTAL ' +
         ' FROM pedidos_produtos ' +
         ' WHERE NUMERO_PEDIDO = :NUMERO_PEDIDO ';
 begin

@@ -104,6 +104,7 @@
       Height = 21
       TabOrder = 0
       OnChange = editProdutoChange
+      OnKeyPress = editProdutoKeyPress
     end
     object editQuantidade: TEdit
       Left = 88
@@ -111,6 +112,8 @@
       Width = 89
       Height = 21
       TabOrder = 1
+      OnExit = editQuantidadeExit
+      OnKeyPress = editQuantidadeKeyPress
     end
     object editValorUnitario: TEdit
       Left = 88
@@ -118,6 +121,8 @@
       Width = 89
       Height = 21
       TabOrder = 2
+      OnExit = editValorUnitarioExit
+      OnKeyPress = editValorUnitarioKeyPress
     end
     object buttonConfirmar: TButton
       Left = 127
@@ -153,7 +158,7 @@
       Width = 216
       Height = 96
       BevelOuter = bvNone
-      TabOrder = 7
+      TabOrder = 8
       object labelNumeroPedido: TLabel
         Left = 8
         Top = 23
@@ -167,6 +172,7 @@
         Width = 121
         Height = 21
         TabOrder = 0
+        OnKeyPress = editNumeroPedidoKeyPress
       end
       object buttonCancelarPedido: TButton
         Left = 8
@@ -195,7 +201,16 @@
       TabStop = False
       ParentColor = True
       ReadOnly = True
-      TabOrder = 8
+      TabOrder = 9
+    end
+    object buttonCancelarLancamento: TButton
+      Left = 8
+      Top = 236
+      Width = 201
+      Height = 25
+      Caption = 'Cancelar Lan'#231'amento'
+      TabOrder = 7
+      OnClick = buttonCancelarLancamentoClick
     end
   end
   object Panel2: TPanel
@@ -289,16 +304,21 @@
       DisplayLabel = 'Quantidade'
       DisplayWidth = 12
       FieldName = 'quantidade'
+      OnSetText = FDMemTablequantidadeSetText
+      EditFormat = '#,##0.00'
+      currency = False
     end
     object FDMemTablevalor_unitario: TCurrencyField
       DisplayLabel = 'Valor unit'#225'rio'
       DisplayWidth = 15
       FieldName = 'valor_unitario'
+      EditFormat = ' #,##0.00'
     end
     object FDMemTablevalot_total: TCurrencyField
       DisplayLabel = 'Valor toral'
       DisplayWidth = 13
       FieldName = 'valor_total'
+      EditFormat = '#,##0.00'
     end
     object FDMemTableauto: TIntegerField
       FieldName = 'auto'
@@ -306,6 +326,7 @@
     end
   end
   object DataSource: TDataSource
+    AutoEdit = False
     DataSet = FDMemTable
     Left = 1000
     Top = 8
